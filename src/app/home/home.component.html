@@ -1,0 +1,16 @@
+<div class="row m-4">
+    <h2 >click on a city to start a new game</h2>
+</div>
+<div class="row">
+    <div class="col-sm-3" *ngFor="let item of items">
+      <a [routerLink]="['game/',item.name]">
+          <div class="card">
+              <img class="card-img-top" height="250px" src="{{item.image}}" alt="">
+           <div class="card-footer">
+             <h4>{{item.name}}</h4>
+           </div>
+          </div>
+      </a>
+        
+    </div>
+</div>
