@@ -139,7 +139,7 @@ export class GameComponent implements OnInit {
 
    endGame(bool:boolean){
       if(bool){
-        this.endmsg=`greate job. it took you ${this.counter} to find all pairs.`
+        this.endmsg=`greate job. it took you ${this.counter} tries to find all pairs.`
       }else{
         this.endmsg=`Nice try. come back another time to play again`;
       }
