@@ -55,33 +55,59 @@ export class GameComponent implements OnInit {
      this.cards.forEach(card=>{
        card.show=false;
      });
-     this.msg=`Choose a card, click on it and try to store that image`;
+     this.msg=`Choose a card, click on it`;
     this.shuffleArray();
   }
 
   clickOnCard(index:number){
-     if(this.inShow ){
+     if(this.inShow   ){
        return;
      }
-
-     let card = this.cards[index];
+     if(this.cards[index].show){
+       return;
+     }
+     
      this.inShow=true;
      this.counter++;
-     let even =this.counter%2;
-     card.show=true;
+     let even =this.counter%2==0;
+     
+     this.cards[index].show=true;
      setTimeout(()=>{
-       card.show=false;
-       this.inShow=false;
-               if(!even){
-                   this.msg="Now try to find this picture in another place on the board";
-                    this.opencard=index;
-              } else{
+              let foundPair=false;
+              if(!even){
+               
+                this.opencard=index;
+                this.msg=`now try to find a match for this picture`;
+              }else{
+              
                 
-                 this.msg=`Choose a card, click on it and try to store that image`;
-               }
-      
+                if(this.opencard>=0 && index!==this.opencard){
+                    let otherid = this.cards[this.opencard].id;
+                    let id =this.cards[index].id
+                    console.log(otherid,id);
+                    if(otherid===id){
+                      this.pairs++;
+                     
+                      this.cards[index].show=true;
+                      this.cards[this.opencard].show=true;
+                      foundPair=true;
+                    }
+                }
+                this.msg=`Choose a card, click on it`;
+              }
+              
+              if(!foundPair){
+                this.cards[index].show=false;
+              }
+           
+              this.inShow=false;
+             if(this.pairs===this.cards.length/2){
+               return this.endGame(true);
+             }
      },800)
   }
+
+ 
   shuffleArray(){
     for(let i =0;i<this.cards.length;i++){
       let random=Math.floor((Math.random() * i) );
